@@ -1,0 +1,194 @@
+const Discord = require("discord.js");
+const { PermissionFlagsBits, ChannelType, EmbedBuilder } = require('discord.js');
+const Schema = require("../../Models/guildSchema");
+
+// Command to set channel / Remove channel / Accept suggest / Deny suggest
+module.exports = {
+    data: new Discord.SlashCommandBuilder()
+        .setName("suggestmod")
+        .setDescription("Edit a suggestion")
+        .setDefaultMemberPermissions(PermissionFlagsBits.Manageinteractions)
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('set')
+                .setDescription('Set a suggest channel.')
+                .addChannelOption(option =>
+                    option
+                        .setName('set')
+                        .setDescription('Suggest channel.')
+                        .addChannelTypes(ChannelType.GuildText)
+                        .setRequired(true))
+                )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('remove')
+                .setDescription('Remove suggest channel.')
+               )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('accept')
+                .setDescription('Accept a suggest.')
+                .addStringOption(option =>
+                    option
+                        .setName('idaccept')
+                        .setDescription('Suggestion message ID to accept.')
+                        .setRequired(true))
+                .addStringOption(option =>
+                    option
+                        .setName('comment')
+                        .setDescription('Specify why you accept this suggestion.')
+                        .setRequired(true))
+                )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('deny')
+                .setDescription('Deny a suggest.')
+                .addStringOption(option =>
+                    option
+                        .setName('iddeny')
+                        .setDescription('Suggestion message ID to deny')
+                        .setRequired(true))
+                .addStringOption(option =>
+                    option
+                        .setName('reason')
+                        .setDescription('Specify why you deny this suggestion.')
+                        .setRequired(true))
+                ),
+  
+      async execute (interaction) {
+
+        const { options } = interaction;
+        
+        // Get channel ID that we want to set
+        const suggestChannelSet = options.getChannel("set");
+
+        // Get suggest message ID that we want to accept
+        const suggestAccept = options.getString("idaccept");
+        // Get comment to accepted suggest
+        const suggestAcceptComment = options.getString("comment");
+
+        // Get suggest message ID that we want to deny
+        const suggestDeny = options.getString("iddeny");
+        // Get reason to denied suggest
+        const suggestDenyReason = options.getString("reason");
+
+        // Set variable to use in switch case
+        const subCommand = interaction.options.getSubcommand();
+
+        // Lookup data in DataBase and set variable with data
+        let guildSavedSchema = await Schema.findOne({ Guild: interaction.guild.id });
+
+        // Get cache from channel saved in DataBase and set variable
+        const suggestChannelSend = interaction.guild.channels.cache.get(guildSavedSchema.Channels.suggestChannel);
+        
+        try {
+            switch (subCommand) {
+                // Command Set Channel ID
+                case "set": {
+                    // If channel aren't saved in DataBase = Update DataBase with Channel ID
+                    if (!guildSavedSchema.Channels.suggestChannel) {
+                        await guildSavedSchema.updateOne({ 
+                            $set: { Channels: { suggestChannel: suggestChannelSet.id }}
+                    })
+                        // Send message reply if channel correctly set
+                        interaction.reply({ content: `✔️ | Suggestion channel correctly set in ${suggestChannelSet}`, ephemeral: true });
+
+                    } else
+                        // Send message reply if there is already a channel ID saved in DataBase
+                        interaction.reply({ content: `❌ | Suggestion channel is already set. Current channel is <#${guildSavedSchema.Channels.suggestChannel}>. Remove channel to set it again.`, ephemeral: true });
+                }
+
+                    break;
+                // Command Remove Channel ID
+                case "remove": {
+                    // If server has channel ID stored in DataBase = Delete
+                    if (guildSavedSchema.Channels.suggestChannel) {
+                        await guildSavedSchema.updateOne({
+                            Channels: { $unset: { suggestChannel: "" }}
+                    })
+                        // Send message reply if channel correctly removed
+                        interaction.reply({ content: `✔️ | Suggestion channel was successfully removed.`, ephemeral: true });
+                        
+                    } else
+                        // Send message reply if there isn't a channel ID saved in DataBase
+                        interaction.reply({ content: `❌ | There isn't channel to remove.`, ephemeral: true });
+                }
+
+                    break;
+                // Command Accept Suggest
+                 case "accept": {
+
+                    // Get message what will accepted with the message ID and set variable
+                    const editEmbedAccept = await suggestChannelSend.messages.fetch(suggestAccept);
+                    // Get Data from message ID
+                    const dataAccept = editEmbedAccept.embeds[0]
+
+                        // Create message embed with data and accepted options
+                        const acceptEmbed = new EmbedBuilder()
+                            .setColor('#00FF00')
+                            .setDescription(dataAccept.description)
+                            .setTimestamp(new Date(dataAccept.timestamp))
+                            .setAuthor(dataAccept.author)
+                            .setFooter({
+                                text: `Accepted by  •  ${interaction.user.tag}`,
+                                iconURL: interaction.user.displayAvatarURL({ dynamic: true })
+                            })
+                            .addFields([{
+                                name: "**Comment:**", 
+                                value: `${suggestAcceptComment}`
+                                }])
+                            .addFields([{
+                                name: "**Status**", 
+                                value: "(ACCEPTED)"
+                            }])
+
+                        // Edit old embed
+                        editEmbedAccept.edit({ embeds: [acceptEmbed] })
+
+                        // Send message if embed was been correctly accepted
+                        interaction.reply({ content: `✔️ | Suggest was been accepted correctly.`, ephemeral: true });
+                }
+
+                    break;
+                // Command Deny Suggest
+                case "deny": {
+
+                    // Get message what will denied with the message ID and set variable
+                    const editEmbedDeny = await suggestChannelSend.messages.fetch(suggestDeny);
+                    // Get Data from message ID
+                    const dataDeny = editEmbedDeny.embeds[0];
+
+                        // Create message embed with data and denied options
+                        const denyEmbed = new EmbedBuilder()
+                            .setColor('#FF0000')
+                            .setDescription(dataDeny.description)
+                            .setTimestamp(new Date(dataDeny.timestamp))
+                            .setAuthor(dataDeny.author)
+                            .setFooter({
+                                text: `Denied by  •  ${interaction.user.tag}`,
+                                iconURL: interaction.user.displayAvatarURL({ dynamic: true })
+                            })
+                            .addFields([{
+                                name: "**Reason:**", 
+                                value: `${suggestDenyReason}`
+                            }])
+                            .addFields([{
+                                name: "**Status**", 
+                                value: "(DENIED)"
+                            }])
+
+                        // Edit old embed
+                        editEmbedDeny.edit({ embeds: [denyEmbed] })
+
+                        // Send message if embed was been correctly denied
+                        interaction.reply({ content: `✔️ | Suggest was been denied correctly.`, ephemeral: true });
+
+                }
+            }
+        } catch (err) {
+            // Send message if occurred an error
+            interaction.reply({ content: `Error: ${err.message}`, ephemeral: true });
+            return
+        }
+    }
+}
