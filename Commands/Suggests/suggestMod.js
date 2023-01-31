@@ -6,53 +6,63 @@ const Schema = require("../../Models/guildSchema");
 module.exports = {
     data: new Discord.SlashCommandBuilder()
         .setName("suggestmod")
-        .setDescription("Edit a suggestion")
+        .setDescription("Edit a suggestion.")
         .setDefaultMemberPermissions(PermissionFlagsBits.Manageinteractions)
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('set')
-                .setDescription('Set a suggest channel.')
-                .addChannelOption(option =>
-                    option
+        .addSubcommandGroup(subcommandgroup => 
+            subcommandgroup
+                .setName("channel")
+                .setDescription("Set or remove a suggest channel.")
+                .addSubcommand(subcommand =>
+                    subcommand
                         .setName('set')
-                        .setDescription('Suggest channel.')
-                        .addChannelTypes(ChannelType.GuildText)
-                        .setRequired(true))
+                        .setDescription('Set a suggest channel.')
+                        .addChannelOption(option =>
+                            option
+                                .setName('set')
+                                .setDescription('Suggest channel.')
+                                .addChannelTypes(ChannelType.GuildText)
+                                .setRequired(true))
+                        )
+                .addSubcommand(subcommand =>
+                    subcommand
+                        .setName('remove')
+                        .setDescription('Remove suggest channel.')
+                        )
                 )
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('remove')
-                .setDescription('Remove suggest channel.')
-               )
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('accept')
-                .setDescription('Accept a suggest.')
-                .addStringOption(option =>
-                    option
-                        .setName('idaccept')
-                        .setDescription('Suggestion message ID to accept.')
-                        .setRequired(true))
-                .addStringOption(option =>
-                    option
-                        .setName('comment')
-                        .setDescription('Specify why you accept this suggestion.')
-                        .setRequired(true))
-                )
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('deny')
-                .setDescription('Deny a suggest.')
-                .addStringOption(option =>
-                    option
-                        .setName('iddeny')
-                        .setDescription('Suggestion message ID to deny')
-                        .setRequired(true))
-                .addStringOption(option =>
-                    option
-                        .setName('reason')
-                        .setDescription('Specify why you deny this suggestion.')
-                        .setRequired(true))
+        .addSubcommandGroup(subcommandgroup => 
+            subcommandgroup
+                .setName("suggest")
+                .setDescription("Accept or deny a suggestion.")
+                .addSubcommand(subcommand =>
+                    subcommand
+                        .setName('accept')
+                        .setDescription('Accept a suggest.')
+                        .addStringOption(option =>
+                            option
+                                .setName('idaccept')
+                                .setDescription('Suggestion message ID to accept.')
+                                .setRequired(true))
+                        .addStringOption(option =>
+                            option
+                                .setName('comment')
+                                .setDescription('Specify why you accept this suggestion.')
+                                .setRequired(true))
+                        )
+                .addSubcommand(subcommand =>
+                    subcommand
+                        .setName('deny')
+                        .setDescription('Deny a suggest.')
+                        .addStringOption(option =>
+                            option
+                                .setName('iddeny')
+                                .setDescription('Suggestion message ID to deny.')
+                                .setRequired(true))
+                        .addStringOption(option =>
+                            option
+                                .setName('reason')
+                                .setDescription('Specify why you deny this suggestion.')
+                                .setRequired(true))
+                        )
                 ),
   
       async execute (interaction) {
