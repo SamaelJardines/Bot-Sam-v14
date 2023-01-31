@@ -5,13 +5,13 @@ const Schema = require("../../Models/guildSchema");
 // Command to set channel / Remove channel / Accept suggest / Deny suggest
 module.exports = {
     data: new Discord.SlashCommandBuilder()
-        .setName("suggestmod")
-        .setDescription("Edit a suggestion.")
+        .setName('suggestmod')
+        .setDescription('Edit a suggestion.')
         .setDefaultMemberPermissions(PermissionFlagsBits.Manageinteractions)
         .addSubcommandGroup(subcommandgroup => 
             subcommandgroup
-                .setName("channel")
-                .setDescription("Set or remove a suggest channel.")
+                .setName('channel')
+                .setDescription('Set or remove a suggest channel.')
                 .addSubcommand(subcommand =>
                     subcommand
                         .setName('set')
@@ -31,8 +31,8 @@ module.exports = {
                 )
         .addSubcommandGroup(subcommandgroup => 
             subcommandgroup
-                .setName("suggest")
-                .setDescription("Accept or deny a suggestion.")
+                .setName('suggest')
+                .setDescription('Accept or deny a suggestion.')
                 .addSubcommand(subcommand =>
                     subcommand
                         .setName('accept')
