@@ -48,9 +48,15 @@ use the next example.
 ```env
 TOKEN="BotToken"
 DATABASETOKEN="DataBaseToken"
+TWITCHCLIENTID="TwitchClientId"
+TWITCHCLIENTSECRET="TwitchClientSecret"
+YOUTUBEAPIKEY="YoutubeApiKey"
 ```
-- TOKEN - the bot token can be obtained from discord developer portal.
-- DATABASETOKEN- the database token can be obtained from mongoose database.
+- TOKEN - The bot token can be obtained from discord developer portal / applications / app / bot / token.
+- DATABASETOKEN - The database token can be obtained from mongodb atlas database / connect.
+- TWITCHCLIENTID - The twitch client id can be obtained from twitch developers / your console / app.
+- TWITCHCLIENTSECRET - The twitch client secret can be obtained from twitch developers / your console / app.
+- YOUTUBEAPIKEY - The youtube api key can be obtained from google cloud / console / credentials / api key / app.
 
 You set everything to run the bot correctly!
 ```sh
