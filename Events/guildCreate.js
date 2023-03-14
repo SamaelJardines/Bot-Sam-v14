@@ -20,10 +20,9 @@ module.exports = {
                 // Guild ID to identify data per server
                 Guild: guild.id,
 
-                // Sub Document where we will store channel IDs
-                Channels: {
-                
-                }
+                // Default language bot
+                Language: "en-US"
+
             });
             // Save Schema
             await guildSavedSchema.save().catch(console.error);

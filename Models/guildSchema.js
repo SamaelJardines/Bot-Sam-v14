@@ -9,6 +9,9 @@ const guildSchema = new Schema({
     // Guild ID to identify data per server
     Guild: String,
 
+    // Language per server
+    Language: String,
+
     // Streamers Array where we will save some Data to Notify
     Streamers: [
         {
