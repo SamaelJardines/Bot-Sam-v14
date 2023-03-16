@@ -1,0 +1,64 @@
+{
+    "Channel": {
+        "Set": {
+            "Success": {
+                "Set": "✔️ | Canal de redes sociales establecido correctamente en"
+            },
+            "Error": {
+                "Set": "❌ | El canal de redes sociales ya esta establecido. El canal actual es"
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | Canal de redes sociales removido exitosamente."
+            },
+            "Error": {
+                "Remove": "❌ | No hay un canal para remover."
+            }
+        }
+    },
+
+    "Twitch": {
+        "Add": {
+            "Success": {
+                "NameAdded": "✔️ | Nombre de streamer añadido correctamente.",
+                "NameAndDescriptionAdded": "✔️ | Nombre de streamer y descripción añadidos correctamente."
+            },
+            "Error": {
+                "StreamerDoesntExist": "❌ | El streamer no existe.",
+                "StreamerAlreadySet": "❌ | El nombre del streamer ya esta establecido."
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | Nombre de streamer removido exitosamente."
+            },
+            "Error": {
+                "Remove": "❌ | No hay un nombre de streamer para remover."
+            }
+        }
+    },
+
+    "YouTube": {
+        "Add": {
+            "Success": {
+                "NameAdded": "✔️ | Nombre de youtuber añadido correctamente.",
+                "NameAndDescriptionAdded": "✔️ | Nombre de youtuber y descripción añadidos correctamente."
+            },
+            "Error": {
+                "YouTuberDoesntExist": "❌ | El youtuber no existe.",
+                "YouTuberAlreadySet": "❌ | El nombre del youtuber ya esta establecido.",
+                "Quota": "❌ | Ocurrio un error, porfavor contacta al desarrollador."
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | Nombre de youtuber removido exitosamente."
+            },
+            "Error": {
+                "Remove": "❌ | No hay un nombre de streamer para remover."
+            }
+        }
+    }
+
+}

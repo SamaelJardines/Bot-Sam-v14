@@ -1,0 +1,58 @@
+{
+    "Channel": {
+        "Set": {
+            "Success": {
+                "Set": "✔️ | Canal de sugerencias establecido correctamente en"
+            },
+            "Error": {
+                "Set": "❌ | El canal de sugerencias ya esta establecido. El canal actual es"
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | Canal de sugerencias removido exitosamente."
+            },
+            "Error": {
+                "Remove": "❌ | No hay un canal para remover."
+            }
+        }
+    },
+
+    "Suggest": {
+        "Accept": {
+            "Success": {
+                "Accepted": "✔️ | Sugerencia aceptada correctamente."
+            },
+            "Embed": {
+                "Footer": "Aceptada por  • ",
+                "Fields": {
+                    "FieldOne": {
+                        "Name": "**Comentario:**"
+                    },
+                    "FieldTwo": {
+                        "Name": "**Estado**",
+                        "Value": "(ACEPTADA)"
+                    }
+                }
+            }
+        },
+        "Deny": {
+            "Success": {
+                "Denied": "✔️ | Sugerencia rechazada exitosamente."
+            },
+            "Embed": {
+                "Footer": "Rechazada por  • ",
+                "Fields": {
+                    "FieldOne": {
+                        "Name": "**Razón:**"
+                    },
+                    "FieldTwo": {
+                        "Name": "**Estado**",
+                        "Value": "(RECHAZADA)"
+                    }
+                }
+            }
+        }
+    }
+
+}

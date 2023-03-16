@@ -23,10 +23,13 @@ module.exports = {
             // Lookup data in DataBase and set variable with data
             let guildSavedSchema = await Schema.findOne({ Guild: interaction.guild.id });
 
+            // Find file language selected in database
+            const lang = require(`../../Languages/${guildSavedSchema.Language}/commands/suggests/suggest.json`);
+
             // If channel aren't saved in DataBase = Return and send message reply
             if (!guildSavedSchema.Channels.suggestChannel) {
                 // Send message if aren't a channel saved in DataBase
-                interaction.reply({ content: `❌ | Suggest channel isn't set.`, ephemeral: true });
+                interaction.reply({ content: `${lang.Channel.Error.Send}`, ephemeral: true });
                 return
             }
 
@@ -36,26 +39,26 @@ module.exports = {
             // Create message embed
             const suggestEmbed = new EmbedBuilder()
                 .setColor("#FFFF00")
-                .setDescription(`**Suggestion:**\n${suggestText}`)
+                .setDescription(`${lang.Embed.Description}\n${suggestText}`)
                 .setTimestamp(new Date())
                 .setAuthor({
-                    name: `Suggest made by ${interaction.user.tag}`,
+                    name: `${lang.Embed.Author} ${interaction.user.tag}`,
                     iconURL: interaction.user.displayAvatarURL({ dynamic: true })
                 })
                 .setFooter({
-                    text: `Requested by  •  ${interaction.user.tag}`,
+                    text: `${lang.Embed.Footer} ${interaction.user.tag}`,
                     iconURL: interaction.user.displayAvatarURL({ dynamic: true })
                 })
                 .addFields([{
-                    name: "**Status**", 
-                    value: "(PENDING)"
+                    name: `${lang.Embed.Fields.FieldOne.Name}`, 
+                    value: `${lang.Embed.Fields.FieldOne.Value}`
                 }])
                 
                 // Send embed to channel saved in DataBase
                 suggestChannelSend.send({ embeds: [suggestEmbed] });
 
                 // Send message if embed was successfully sent to channel
-                interaction.reply({ content: `✔️ | Suggestion was successfully sent to <#${guildSavedSchema.Channels.suggestChannel}>.`, ephemeral: true });
+                interaction.reply({ content: `✔️ | ${lang.Send.Success.Send} <#${guildSavedSchema.Channels.suggestChannel}>.`, ephemeral: true });
               
     }
    

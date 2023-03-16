@@ -88,6 +88,9 @@ module.exports = {
         // Lookup data in DataBase and set variable with data
         let guildSavedSchema = await Schema.findOne({ Guild: interaction.guild.id });
 
+        // Find file language selected in database
+        const lang = require(`../../Languages/${guildSavedSchema.Language}/commands/suggests/suggestMod.json`);
+
         // Get cache from channel saved in DataBase and set variable
         const suggestChannelSend = interaction.guild.channels.cache.get(guildSavedSchema.Channels.suggestChannel);
         
@@ -103,11 +106,11 @@ module.exports = {
                                 $set: { Channels: { suggestChannel: suggestChannelSet.id }}
                             });
                             // Send message reply if channel correctly set
-                            interaction.reply({ content: `✔️ | Suggestion channel correctly set in ${suggestChannelSet}`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Set.Success.Set} ${suggestChannelSet}`, ephemeral: true });
 
                         } else
                             // Send message reply if there is already a channel ID saved in DataBase
-                            interaction.reply({ content: `❌ | Suggestion channel is already set. Current channel is <#${guildSavedSchema.Channels.suggestChannel}>. Remove channel to set it again.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Set.Error.Set} <#${guildSavedSchema.Channels.suggestChannel}>.`, ephemeral: true });
                             return
                     }
 
@@ -120,11 +123,11 @@ module.exports = {
                                 Channels: { $unset: { suggestChannel: "" }}
                             });
                             // Send message reply if channel correctly removed
-                            interaction.reply({ content: `✔️ | Suggestion channel was successfully removed.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Remove.Success.Remove}`, ephemeral: true });
 
                         } else
                             // Send message reply if there isn't a channel ID saved in DataBase
-                            interaction.reply({ content: `❌ | There isn't channel to remove.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Remove.Error.Remove}`, ephemeral: true });
                             return
                     }
 
@@ -146,23 +149,23 @@ module.exports = {
                                 .setTimestamp(new Date(dataAccept.timestamp))
                                 .setAuthor(dataAccept.author)
                                 .setFooter({
-                                    text: `Accepted by  •  ${interaction.user.tag}`,
+                                    text: `${lang.Suggest.Accept.Embed.Footer} ${interaction.user.tag}`,
                                     iconURL: interaction.user.displayAvatarURL({ dynamic: true })
                                 })
                                 .addFields([{
-                                    name: "**Comment:**", 
+                                    name: `${lang.Suggest.Accept.Embed.Fields.FieldOne.Name}`,
                                     value: `${suggestAcceptComment}`
                                     }])
                                 .addFields([{
-                                    name: "**Status**", 
-                                    value: "(ACCEPTED)"
+                                    name: `${lang.Suggest.Accept.Embed.Fields.FieldTwo.Name}`,
+                                    value: `${lang.Suggest.Accept.Embed.Fields.FieldTwo.Value}`
                                 }])
 
                             // Edit old embed
                             editEmbedAccept.edit({ embeds: [acceptEmbed] });
 
                             // Send message if embed was been correctly accepted
-                            interaction.reply({ content: `✔️ | Suggest was been accepted correctly.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Suggest.Accept.Success.Accept}`, ephemeral: true });
                     }
 
                     // Command Deny Suggest
@@ -179,23 +182,23 @@ module.exports = {
                                 .setTimestamp(new Date(dataDeny.timestamp))
                                 .setAuthor(dataDeny.author)
                                 .setFooter({
-                                    text: `Denied by  •  ${interaction.user.tag}`,
+                                    text: `${lang.Suggest.Deny.Embed.Footer} ${interaction.user.tag}`,
                                     iconURL: interaction.user.displayAvatarURL({ dynamic: true })
                                 })
                                 .addFields([{
-                                    name: "**Reason:**", 
+                                    name: `${lang.Suggest.Deny.Embed.Fields.FieldOne.Name}`, 
                                     value: `${suggestDenyReason}`
                                 }])
                                 .addFields([{
-                                    name: "**Status**", 
-                                    value: "(DENIED)"
+                                    name: `${lang.Suggest.Deny.Embed.Fields.FieldTwo.Name}`,
+                                    value: `${lang.Suggest.Deny.Embed.Fields.FieldTwo.Value}`
                                 }])
 
                             // Edit old embed
                             editEmbedDeny.edit({ embeds: [denyEmbed] });
 
                             // Send message if embed was been correctly denied
-                            interaction.reply({ content: `✔️ | Suggest was been denied correctly.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Suggest.Deny.Success.Deny}`, ephemeral: true });
                     }
 
                 }

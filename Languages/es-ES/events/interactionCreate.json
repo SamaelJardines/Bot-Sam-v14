@@ -1,0 +1,17 @@
+{
+    "Language": {
+        "Success": {
+            "CorrectlySelected": "✔️ | Lenguaje seleccionado correctamente."
+        },
+        "Error": {
+
+            "AlreadySelected": "❌ | El lenguaje ya esta seleccionado."
+        }
+    },
+
+    "Command": {
+        "Error": {
+            "Outdated": "❌ | Este comando no existe o esta desactualizado."
+        }
+    }
+}

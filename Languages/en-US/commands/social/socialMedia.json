@@ -1,0 +1,64 @@
+{
+    "Channel": {
+        "Set": {
+            "Success": {
+                "Set": "✔️ | Social media channel correctly set in"
+            },
+            "Error": {
+                "Set": "❌ | Social media channel is already set. Current channel is"
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | Social media channel successfully removed."
+            },
+            "Error": {
+                "Remove": "❌ | There isn't channel to remove."
+            }
+        }
+    },
+
+    "Twitch": {
+        "Add": {
+            "Success": {
+                "NameAdded": "✔️ | Streamer name added correctly.",
+                "NameAndDescriptionAdded": "✔️ | Streamer name and description added correctly."
+            },
+            "Error": {
+                "StreamerDoesntExist": "❌ | Streamer doesn't exist.",
+                "StreamerAlreadySet": "❌ | Streamer name is already set."
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | Streamer name successfully removed."
+            },
+            "Error": {
+                "Remove": "❌ | There isn't Streamer name to remove."
+            }
+        }
+    },
+
+    "YouTube": {
+        "Add": {
+            "Success": {
+                "NameAdded": "✔️ | YouTuber name added correctly.",
+                "NameAndDescriptionAdded": "✔️ | YouTuber name and description added correctly."
+            },
+            "Error": {
+                "YouTuberDoesntExist": "❌ | YouTuber doesn't exist.",
+                "YouTuberAlreadySet": "❌ | YouTuber name is already set.",
+                "Quota": "❌ | An error occurred, please contact to developer."
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | YouTuber name successfully removed."
+            },
+            "Error": {
+                "Remove": "❌ | There isn't YouTuber name to remove."
+            }
+        }
+    }
+
+}

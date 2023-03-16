@@ -1,0 +1,26 @@
+{
+    "Send": {
+        "Success": {
+            "Send": "✔️ | Sugerencia enviada correctamente a"
+        }
+    },
+
+    "Channel": {
+        "Error": {
+            "Send": "❌ | El canal de sugerencias aun no esta establecido." 
+        }
+    },
+
+    "Embed": {
+        "Description": "**Sugerencia:**",
+        "Author": "Sugerencia hecha por",
+        "Footer": "Pedido por  •",
+        "Fields": {
+            "FieldOne": {
+                "Name": "**Estado**",
+                "Value": "(PENDIENTE)"
+            }
+        }
+    }
+
+}

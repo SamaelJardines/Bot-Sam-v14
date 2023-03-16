@@ -116,6 +116,9 @@ module.exports = {
         // Find data in DataBase and set variable with data
         let guildSavedSchema = await Schema.findOne({ Guild: interaction.guild.id });
 
+        // Find file language selected in database
+        const lang = require(`../../Languages/${guildSavedSchema.Language}/commands/social/socialMedia.json`);
+
         try {
             switch (subCommandGroup) {
                 case "channel": {
@@ -128,11 +131,11 @@ module.exports = {
                                 $set: { Channels: { socialMediaChannel: socialMediaChannelSet.id }}
                             });
                             // Send message reply if channel correctly set
-                            interaction.reply({ content: `✔️ | Social media channel correctly set in ${socialMediaChannelSet}`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Set.Success.Set} ${socialMediaChannelSet}`, ephemeral: true });
 
                         } else if (guildSavedSchema.Channels.socialMediaChannel) {
                             // Send message reply if there is already a channel ID saved in DataBase
-                            interaction.reply({ content: `❌ | Social media channel is already set. Current channel is <#${guildSavedSchema.Channels.socialMediaChannel}>. Remove channel to set it again.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Set.Error.Set} <#${guildSavedSchema.Channels.socialMediaChannel}>.`, ephemeral: true });
                             return
 
                         }
@@ -147,11 +150,11 @@ module.exports = {
                                 Channels: { $unset: { socialMediaChannel: "" }}
                             });
                             // Send message reply if channel correctly removed
-                            interaction.reply({ content: `✔️ | Social media channel was successfully removed.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Remove.Success.Remove}`, ephemeral: true });
                             
                         } else if (!guildSavedSchema.Channels.socialMediaChannel) {
                             // Send message reply if there isn't a channel ID saved in DataBase
-                            interaction.reply({ content: `❌ | There isn't channel to remove.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Channel.Remove.Error.Remove}`, ephemeral: true });
                             return
 
                         }
@@ -183,7 +186,7 @@ module.exports = {
                             // If twitch channel doesn't exist
                             if (res.data[0] === undefined) {
                                 // Return message replys
-                                interaction.reply({ content: `❌ | Streamer doesn't exist.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.Twitch.Add.Error.StreamerDoesntExist}`, ephemeral: true });
                                 return
                             }
 
@@ -194,7 +197,7 @@ module.exports = {
                                     $push: { Streamers: { Name: streamerName.toLowerCase() }}
                                 });
                                 // Send message reply if streamer name correctly added
-                                interaction.reply({ content: `✔️ | Streamer name added correctly.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.Twitch.Add.Success.NameAdded}`, ephemeral: true });
 
                             // If streamer name aren't saved in DataBase and User want to save description
                             } else if (streamerDescription && chkStreamer === 0) {
@@ -203,11 +206,11 @@ module.exports = {
                                     $push: { Streamers: { Name: streamerName.toLowerCase(), Description: streamerDescription }}
                                 });
                                 // Send message reply if streamer name and description correctly added
-                                interaction.reply({ content: `✔️ | Streamer name and description added correctly.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.Twitch.Add.Success.NameAndDescriptionAdded}`, ephemeral: true });
 
                             } else if (chkStreamer !== 0) {
                                 // Send message reply if there is already a Streamer saved in DataBase
-                                interaction.reply({ content: `❌ | Streamer name is already set.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.Twitch.Add.Error.StreamerAlreadySet}`, ephemeral: true });
                                 return
 
                             }
@@ -223,11 +226,11 @@ module.exports = {
                                 $pull: { Streamers: { Name: streamerName }}
                             });
                             // Send message reply if streamer name correctly removed
-                            interaction.reply({ content: `✔️ | Streamer name removed correctly.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Twitch.Remove.Success.Remove}`, ephemeral: true });
 
                         } else
                             // Send message reply if there isn't a Streamer name saved in DataBase
-                            interaction.reply({ content: `❌ | There isn't Streamer name to remove.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.Twitch.Remove.Error.Remove}`, ephemeral: true });
                             return
                     }
 
@@ -250,14 +253,14 @@ module.exports = {
                             // If error occurred
                             if (res.error) {
                                 // Return message reply
-                                interaction.reply({ content: `❌ | An error occurred, please contact to developer.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.YouTube.Add.Error.Quota}`, ephemeral: true });
                                 return
                             }
 
                             // If youtube channel doesn't exist
                             if (res.pageInfo.totalResults !== 1) {
                                 // Return message reply
-                                interaction.reply({ content: `❌ | YouTuber doesn't exist.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.YouTube.Add.Error.YouTuberDoesntExist}`, ephemeral: true });
                                 return
                             }
 
@@ -268,7 +271,7 @@ module.exports = {
                                     $push: { YouTubers: { Name: youtuberName }}
                                 });
                                 // Send message reply if youtuber name correctly added
-                                interaction.reply({ content: `✔️ | YouTuber name added correctly.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.YouTube.Add.Success.NameAdded}`, ephemeral: true });
 
                             // If youtuber name aren't saved in DataBase and User want to save description
                             } else if (youtuberDescription && chkYouTuber === 0) {
@@ -277,11 +280,11 @@ module.exports = {
                                     $push: { YouTubers: { Name: youtuberName, Description: youtuberDescription }}
                                 });
                                 // Send message reply if youtuber name and description correctly added
-                                interaction.reply({ content: `✔️ | YouTuber name added correctly.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.YouTube.Add.Success.NameAndDescriptionAdded}`, ephemeral: true });
 
                             } else if (chkYouTuber !== 0) {
                                 // Send message reply if there is already a YouTuber name saved in DataBase
-                                interaction.reply({ content: `❌ | YouTuber name is already set.`, ephemeral: true });
+                                interaction.reply({ content: `${lang.YouTube.Add.Error.YouTuberAlreadySet}`, ephemeral: true });
                                 return
 
                             }
@@ -298,11 +301,11 @@ module.exports = {
                                 $pull: { YouTubers: { Name: youtuberName }}
                             });
                             // Send message reply if youtuber name correctly removed
-                            interaction.reply({ content: `✔️ | YouTuber name removed correctly.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.YouTube.Remove.Success.Remove}`, ephemeral: true });
 
                         } else
                             // Send message reply if there isn't a YouTuber name saved in DataBase
-                            interaction.reply({ content: `❌ | There isn't YouTuber name to remove.`, ephemeral: true });
+                            interaction.reply({ content: `${lang.YouTube.Remove.Error.Remove}`, ephemeral: true });
                             return
 
                     }

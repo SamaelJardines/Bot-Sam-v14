@@ -1,0 +1,26 @@
+{
+    "Send": {
+        "Success": {
+            "Send": "✔️ | Suggestion successfully sent to"
+        }
+    },
+
+    "Channel": {
+        "Error": {
+            "Send": "❌ | Suggest channel isn't set." 
+        }
+    },
+
+    "Embed": {
+        "Description": "**Suggestion:**",
+        "Author": "Suggest made by",
+        "Footer": "Requested by  • ",
+        "Fields": {
+            "FieldOne": {
+                "Name": "**Status**",
+                "Value": "(PENDING)"
+            }
+        }
+    }
+
+}

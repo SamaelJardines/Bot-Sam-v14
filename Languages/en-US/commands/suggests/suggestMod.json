@@ -1,0 +1,58 @@
+{
+    "Channel": {
+        "Set": {
+            "Success": {
+                "Set": "✔️ | Suggestion channel correctly set in"
+            },
+            "Error": {
+                "Set": "❌ | Suggestion channel is already set. Current channel is"
+            }
+        },
+        "Remove": {
+            "Success": {
+                "Remove": "✔️ | Suggestion channel successfully removed."
+            },
+            "Error": {
+                "Remove": "❌ | There isn't channel to remove."
+            }
+        }
+    },
+
+    "Suggest": {
+        "Accept": {
+            "Success": {
+                "Accept": "✔️ | Suggest accepted correctly."
+            },
+            "Embed": {
+                "Footer": "Accepted by  • ",
+                "Fields": {
+                    "FieldOne": {
+                        "Name": "**Comment:**"
+                    },
+                    "FieldTwo": {
+                        "Name": "**Status**",
+                        "Value": "(ACCEPTED)"
+                    }
+                }
+            }
+        },
+        "Deny": {
+            "Success": {
+                "Deny": "✔️ | Suggest successfully denied."
+            },
+            "Embed": {
+                "Footer": "Denied by  • ",
+                "Fields": {
+                    "FieldOne": {
+                        "Name": "**Reason:**"
+                    },
+                    "FieldTwo": {
+                        "Name": "**Status**",
+                        "Value": "(DENIED)"
+                    }
+                }
+            }
+        }
+    }
+
+}
